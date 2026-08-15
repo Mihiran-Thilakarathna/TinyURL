@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ─── CSS Custom Properties (Design Tokens) ──────────────────────────────── */
+:root {
+  /* Shadcn UI HSL tokens */
+  --background: 222 47% 4%;
+  --foreground: 210 40% 96%;
+  --card: 222 44% 7%;
+  --card-foreground: 210 40% 96%;
+  --popover: 222 44% 7%;
+  --popover-foreground: 210 40% 96%;
+  --primary: 263 70% 58%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 55%;
+  --accent: 217 32% 17%;
+  --accent-foreground: 210 40% 96%;
+  --destructive: 0 62% 50%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 32% 17%;
+  --input: 217 32% 17%;
+  --ring: 263 70% 58%;
+  --radius: 0.75rem;
+}
+
+/* ─── Base Reset ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: hsl(222, 47%, 4%);
+  color: hsl(210, 40%, 96%);
+  line-height: 1.6;
+}
+
+/* ─── Scrollbar Styling ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* ─── Glassmorphism Card Utility ──────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+@keyframes slide-in-from-bottom {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes slide-in-from-top {
+  from { transform: translateY(-8px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.animate-in                { animation-fill-mode: both; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.slide-in-from-bottom-4    { animation-name: slide-in-from-bottom; }
+.slide-in-from-top-2       { animation-name: slide-in-from-top; }
+.fade-in                   { animation-name: fade-in; }
+.duration-200              { animation-duration: 0.2s; }
+.duration-500              { animation-duration: 0.5s; }
+.animate-spin              { animation: spin 1s linear infinite; }
+.animate-pulse             { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* ─── Focus & Selection ───────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: white;
+}
