@@ -17,7 +17,6 @@ export default function QrCodeCard({ url, shortCode }: QrCodeCardProps) {
 
   const handleDownload = () => {
     try {
-      // Find the canvas element rendered by qrcode.react inside our ref container
       const canvas = qrRef.current?.querySelector("canvas");
       if (!canvas) {
         toast.error("Could not find QR code canvas. Please try again.");
@@ -49,7 +48,6 @@ export default function QrCodeCard({ url, shortCode }: QrCodeCardProps) {
           size={160}
           level="H"
           includeMargin={false}
-          // Styled with TinyLink brand colors
           fgColor="#1e1b4b"
           bgColor="#ffffff"
         />

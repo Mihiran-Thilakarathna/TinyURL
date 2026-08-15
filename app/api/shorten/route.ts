@@ -26,12 +26,11 @@ export async function POST(request: NextRequest) {
 
     const { originalUrl, customCode, password, expiresAt } = parsed.data;
 
-    // ─── Freemium Logic ───
+    // 
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id;
 
     if (!userId) {
-      // Guest User: Rule A (Feature Gate)
       if ((customCode && customCode.trim() !== "") || (password && password.trim() !== "") || (expiresAt && expiresAt.trim() !== "")) {
         return NextResponse.json(
           { error: "Please log in to use advanced features." },
@@ -39,7 +38,6 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Guest User: Rule B (Usage Limit)
       if (redis) {
         const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "127.0.0.1";
         const limitKey = `guest_limit:${ip}`;
@@ -59,7 +57,6 @@ export async function POST(request: NextRequest) {
     let shortCode: string;
 
     if (customCode && customCode.trim() !== "") {
-      // Check if the custom alias is already taken
       const existing = await prisma.link.findUnique({
         where: { shortCode: customCode.trim() },
       });
@@ -73,7 +70,6 @@ export async function POST(request: NextRequest) {
 
       shortCode = customCode.trim();
     } else {
-      // Auto-generate a unique 6-character code, retrying on collision (very unlikely)
       let attempts = 0;
       do {
         shortCode = nanoid(6);
@@ -101,7 +97,6 @@ export async function POST(request: NextRequest) {
     if (expiresAt && expiresAt.trim() !== "") {
       expiresAtDate = new Date(expiresAt);
 
-      // Reject dates in the past
       if (expiresAtDate <= new Date()) {
         return NextResponse.json(
           { error: "Expiration date must be in the future." },

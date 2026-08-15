@@ -19,7 +19,6 @@ function createRedisClient(): Redis | null {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-  // Reject placeholder or missing values
   if (!url || !token || url.includes("[") || token.includes("[")) {
     if (process.env.NODE_ENV === "development") {
       console.warn(

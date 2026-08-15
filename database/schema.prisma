@@ -22,7 +22,7 @@ model Link {
   user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ─── NextAuth Models ─────────────────────────────────────────────────────────
+// 
 
 model Account {
   id                 String  @id @default(uuid())

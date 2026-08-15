@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
 
     const { shortCode, password } = parsed.data;
 
-    // Fetch only the fields we need
     const link = await prisma.link.findUnique({
       where: { shortCode },
       select: {
@@ -38,7 +37,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Link not found." }, { status: 404 });
     }
 
-    // Check expiry
     if (link.expiresAt && link.expiresAt <= new Date()) {
       return NextResponse.json({ error: "This link has expired." }, { status: 410 });
     }
@@ -47,14 +45,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "This link is not password protected." }, { status: 400 });
     }
 
-    // Compare password using bcrypt
     const isMatch = await bcrypt.compare(password, link.password);
 
     if (!isMatch) {
       return NextResponse.json({ error: "Incorrect password. Please try again." }, { status: 401 });
     }
 
-    // Track click on successful password verification
     await prisma.link.update({
       where: { id: link.id },
       data: { clicks: { increment: 1 } },

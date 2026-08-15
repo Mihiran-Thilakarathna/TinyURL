@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import AuthProvider from "@frontend/components/auth-provider";
+import Navbar from "@frontend/components/navbar";
+import Footer from "@frontend/components/footer";
 
-const inter = Inter({
+const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "TinyLink — Free URL Shortener",
+  title: "TinyURL — Free URL Shortener",
   description:
-    "Shorten long URLs instantly with TinyLink. Add custom aliases, password protection, expiry dates, and QR codes — all for free.",
+    "Shorten long URLs instantly with TinyURL. Add custom aliases, password protection, expiry dates, and QR codes — all for free.",
   keywords: ["url shortener", "link shortener", "custom alias", "qr code", "tinylink"],
   openGraph: {
-    title: "TinyLink — Free URL Shortener",
+    title: "TinyURL — Free URL Shortener",
     description: "Shorten links with custom aliases, passwords, expiry dates, and QR codes.",
     type: "website",
   },
@@ -28,12 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased bg-slate-950 text-white min-h-screen">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="font-sans antialiased min-h-screen flex flex-col">
         <AuthProvider>
-          {children}
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
         </AuthProvider>
-        {/* Sonner toast provider — positioned at bottom-center */}
         <Toaster
           position="bottom-center"
           toastOptions={{

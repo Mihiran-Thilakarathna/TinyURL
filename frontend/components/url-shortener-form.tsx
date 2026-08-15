@@ -49,7 +49,6 @@ export interface ShortenResult {
 
 
 export default function UrlShortenerForm() {
-  // Form state
   const [originalUrl, setOriginalUrl] = useState("");
   const [customCode, setCustomCode] = useState("");
   const [password, setPassword] = useState("");
@@ -57,18 +56,15 @@ export default function UrlShortenerForm() {
   const [expiresAt, setExpiresAt] = useState<Date | undefined>(undefined);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  // Auth State
   const { data: session } = useSession();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
 
-  // Advanced options visibility
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [useCustomCode, setUseCustomCode] = useState(false);
   const [usePassword, setUsePassword] = useState(false);
   const [useExpiry, setUseExpiry] = useState(false);
 
-  // Submission state
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<ShortenResult | null>(null);
 
@@ -116,14 +112,12 @@ export default function UrlShortenerForm() {
           setShowAuthModal(true);
           return;
         }
-        // Show the server's error message in a toast
         throw new Error(data.error ?? "Something went wrong. Please try again.");
       }
 
       setResult(data as ShortenResult);
       toast.success("Link shortened successfully! 🎉");
 
-      // Reset form after success
       setOriginalUrl("");
       setCustomCode("");
       setPassword("");
@@ -152,27 +146,19 @@ export default function UrlShortenerForm() {
       <Card className="glass-card border-white/10 shadow-2xl">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3 mb-1">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/30">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/30 shrink-0">
               <Scissors className="h-5 w-5 text-white" />
             </div>
-            <div>
-              <CardTitle className="text-xl text-white">Shorten a Link</CardTitle>
-              <CardDescription className="text-slate-400 text-sm">
-                Paste your long URL and get a clean, shareable link instantly
-              </CardDescription>
-            </div>
+            <CardDescription className="text-[hsl(var(--foreground))] text-[15px] font-medium leading-snug">
+              Paste your long URL and get a clean, shareable link instantly
+            </CardDescription>
           </div>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-5" id="shorten-form">
-            {/* URL Input */}
-            <div className="space-y-2">
-              <Label htmlFor="original-url" className="text-slate-300 text-sm font-medium">
-                Long URL
-              </Label>
-              <div className="relative">
-                <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+            <div className="relative">
+              <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                 <Input
                   ref={urlInputRef}
                   id="original-url"
@@ -180,31 +166,43 @@ export default function UrlShortenerForm() {
                   placeholder="https://example.com/your-very-long-url..."
                   value={originalUrl}
                   onChange={(e) => setOriginalUrl(e.target.value)}
-                  className="pl-10 h-12 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-violet-500/50 focus-visible:border-violet-500/50 transition-all"
+                  className="pl-10 h-12 bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-violet-500/50 focus-visible:border-violet-500/50 transition-all"
                   required
                   disabled={isLoading}
                 />
-              </div>
             </div>
 
-            {/* Advanced Options Toggle */}
-            <button
-              type="button"
-              onClick={() => setShowAdvanced((v) => !v)}
-              className="flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors group"
-            >
-              <Sparkles className="h-3.5 w-3.5 group-hover:rotate-12 transition-transform" />
-              Advanced Options
-              {showAdvanced ? (
-                <ChevronUp className="h-3.5 w-3.5" />
-              ) : (
-                <ChevronDown className="h-3.5 w-3.5" />
-              )}
-            </button>
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAdvanced((v) => !v)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-300 hover:shadow-[0_0_15px_rgba(139,92,246,0.2)]"
+                style={{
+                  color: showAdvanced ? "hsl(263 70% 65%)" : "hsl(var(--muted-foreground))",
+                  borderColor: "hsl(263 70% 58% / 0.6)",
+                  background: showAdvanced ? "hsl(263 70% 58% / 0.1)" : "rgba(139,92,246,0.03)",
+                  boxShadow: showAdvanced ? "0 0 20px hsl(263 70% 58% / 0.15)" : "none",
+                }}
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Advanced Options
+                {showAdvanced ? (
+                  <ChevronUp className="h-3.5 w-3.5" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5" />
+                )}
+              </button>
+            </div>
 
-            {/* Advanced Options Panel */}
             {showAdvanced && (
-              <div className="space-y-4 p-4 rounded-xl bg-white/3 border border-white/8 animate-in slide-in-from-top-2 duration-200 relative overflow-hidden">
+              <div
+                className="space-y-5 p-5 rounded-2xl border animate-in slide-in-from-top-2 duration-300 relative overflow-hidden"
+                style={{
+                  background: "rgba(255, 255, 255, 0.02)",
+                  borderColor: "rgba(255, 255, 255, 0.06)",
+                  boxShadow: "inset 0 0 20px rgba(0,0,0,0.2)"
+                }}
+              >
                 {!session && (
                   <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center">
                     <Lock className="h-6 w-6 text-violet-400 mb-2" />
@@ -214,7 +212,6 @@ export default function UrlShortenerForm() {
                     </Button>
                   </div>
                 )}
-                {/* Custom Alias */}
                 <div className="flex items-start gap-3">
                   <Switch
                     id="use-custom-code"
@@ -225,7 +222,7 @@ export default function UrlShortenerForm() {
                   <div className="flex-1 space-y-2">
                     <Label
                       htmlFor="use-custom-code"
-                      className="text-slate-300 text-sm font-medium cursor-pointer"
+                      className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
                     >
                       Custom Alias
                     </Label>
@@ -239,7 +236,7 @@ export default function UrlShortenerForm() {
                           placeholder="my-custom-link"
                           value={customCode}
                           onChange={(e) => setCustomCode(e.target.value)}
-                          className="pl-6 h-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-violet-500/50 text-sm"
+                          className="pl-6 h-10 bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-violet-500/50 text-sm"
                           disabled={isLoading}
                           maxLength={32}
                         />
@@ -248,9 +245,8 @@ export default function UrlShortenerForm() {
                   </div>
                 </div>
 
-                <Separator className="bg-white/8" />
+                <Separator className="bg-white/5" />
 
-                {/* Password Protection */}
                 <div className="flex items-start gap-3">
                   <Switch
                     id="use-password"
@@ -262,7 +258,7 @@ export default function UrlShortenerForm() {
                     <div className="flex items-center gap-2">
                       <Label
                         htmlFor="use-password"
-                        className="text-slate-300 text-sm font-medium cursor-pointer"
+                        className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
                       >
                         Password Protection
                       </Label>
@@ -276,7 +272,7 @@ export default function UrlShortenerForm() {
                           placeholder="Enter a password..."
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="pr-10 h-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-violet-500/50 text-sm"
+                          className="pr-10 h-10 bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-violet-500/50 text-sm"
                           disabled={isLoading}
                         />
                         <button
@@ -297,7 +293,6 @@ export default function UrlShortenerForm() {
 
                 <Separator className="bg-white/8" />
 
-                {/* Expiration Date */}
                 <div className="flex items-start gap-3">
                   <Switch
                     id="use-expiry"
@@ -309,7 +304,7 @@ export default function UrlShortenerForm() {
                     <div className="flex items-center gap-2">
                       <Label
                         htmlFor="use-expiry"
-                        className="text-slate-300 text-sm font-medium cursor-pointer"
+                        className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
                       >
                         Expiration Date
                       </Label>
@@ -321,17 +316,17 @@ export default function UrlShortenerForm() {
                           <Button
                             variant="outline"
                             id="expiry-date-picker"
-                            className="h-10 w-full justify-start bg-white/5 border-white/10 text-left text-sm hover:bg-white/10 hover:text-white animate-in fade-in duration-200"
+                            className="h-10 w-full justify-start bg-background border-input text-left text-sm hover:bg-accent hover:text-accent-foreground animate-in fade-in duration-200"
                           >
                             <Calendar className="mr-2 h-4 w-4 text-slate-400" />
                             {expiresAt ? (
-                              <span className="text-white">{format(expiresAt, "PPP")}</span>
+                              <span className="text-[hsl(var(--foreground))]">{format(expiresAt, "PPP")}</span>
                             ) : (
                               <span className="text-slate-500">Pick a date...</span>
                             )}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-slate-900 border-white/10" align="start">
+                        <PopoverContent className="w-auto p-0 bg-background border-border" align="start">
                           <CalendarPicker
                             mode="single"
                             selected={expiresAt}
@@ -351,12 +346,11 @@ export default function UrlShortenerForm() {
               </div>
             )}
 
-            {/* Submit Button */}
             <Button
               type="submit"
               id="shorten-button"
               disabled={isLoading}
-              className="w-full h-12 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-base shadow-lg shadow-violet-500/25 transition-all duration-200 hover:shadow-violet-500/40 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="w-full h-12 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-base shadow-sm shadow-violet-500/10 transition-all duration-200 hover:shadow-md hover:shadow-violet-500/20 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
@@ -380,7 +374,6 @@ export default function UrlShortenerForm() {
 
       {result && <ResultCard result={result} onReset={handleReset} />}
 
-      {/* Auth Modal for Rate Limits / Feature Gates */}
       {showAuthModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
           <Card className="w-full max-w-sm glass-card border-white/10 shadow-2xl animate-in zoom-in-95 duration-200">

@@ -80,14 +80,12 @@ export default async function RedirectPage({
       notFound(); // → app/not-found.tsx
     }
 
-    // Store only what the redirect logic needs (never store hashed password)
     linkData = {
       originalUrl: dbLink.originalUrl,
       hasPassword: !!dbLink.password,
       expiresAt: dbLink.expiresAt ? dbLink.expiresAt.toISOString() : null,
     };
 
-    // Cache if Redis is available
     if (redis) {
       const ttl = dbLink.expiresAt
         ? Math.max(0, Math.floor((dbLink.expiresAt.getTime() - Date.now()) / 1000))

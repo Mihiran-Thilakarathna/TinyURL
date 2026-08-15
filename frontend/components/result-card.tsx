@@ -39,7 +39,6 @@ export default function ResultCard({ result, onReset }: ResultCardProps) {
       toast.success("Copied to clipboard!");
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback for environments where clipboard API isn't available
       const textarea = document.createElement("textarea");
       textarea.value = result.shortUrl;
       document.body.appendChild(textarea);
@@ -75,7 +74,6 @@ export default function ResultCard({ result, onReset }: ResultCardProps) {
             {result.shortUrl}
           </span>
           <div className="flex items-center gap-1 shrink-0">
-            {/* Copy button */}
             <Button
               variant="ghost"
               size="icon"
@@ -90,7 +88,6 @@ export default function ResultCard({ result, onReset }: ResultCardProps) {
                 <Copy className="h-4 w-4" />
               )}
             </Button>
-            {/* Open in new tab */}
             <Button
               variant="ghost"
               size="icon"

@@ -37,7 +37,6 @@ export default function PasswordForm({ shortCode }: PasswordFormProps) {
       const data = await res.json();
 
       if (res.ok && data.originalUrl) {
-        // Redirect to original URL on success
         window.location.href = data.originalUrl;
       } else {
         setError(data.error || "Incorrect password. Please try again.");
@@ -51,7 +50,6 @@ export default function PasswordForm({ shortCode }: PasswordFormProps) {
 
   return (
     <main className="relative min-h-screen overflow-hidden flex items-center justify-center">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
       <div className="absolute -top-64 -left-32 w-[600px] h-[600px] rounded-full bg-violet-600/15 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-64 -right-32 w-[500px] h-[500px] rounded-full bg-indigo-600/15 blur-3xl pointer-events-none" />
@@ -59,7 +57,6 @@ export default function PasswordForm({ shortCode }: PasswordFormProps) {
       <div className="relative z-10 w-full max-w-md px-4">
         <Card className="glass-card border-white/10 shadow-2xl">
           <CardHeader className="pb-4 text-center">
-            {/* Lock icon */}
             <div className="flex justify-center mb-4">
               <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 border border-amber-500/30">
                 <Lock className="h-7 w-7 text-amber-400" />
@@ -90,7 +87,6 @@ export default function PasswordForm({ shortCode }: PasswordFormProps) {
                 />
               </div>
 
-              {/* Error message */}
               {error && (
                 <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/25">
                   <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
