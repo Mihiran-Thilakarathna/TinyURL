@@ -195,40 +195,37 @@ export default function UrlShortenerForm() {
             </div>
 
             {showAdvanced && (
-              <div
-                className="space-y-5 p-5 rounded-2xl border animate-in slide-in-from-top-2 duration-300 relative overflow-hidden"
-                style={{
-                  background: "rgba(255, 255, 255, 0.02)",
-                  borderColor: "rgba(255, 255, 255, 0.06)",
-                  boxShadow: "inset 0 0 20px rgba(0,0,0,0.2)"
-                }}
-              >
+              <div className="space-y-3 relative animate-in slide-in-from-top-2 fade-in duration-300">
                 {!session && (
-                  <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center">
-                    <Lock className="h-6 w-6 text-violet-400 mb-2" />
-                    <p className="text-sm text-white font-medium mb-3">Login to unlock advanced features</p>
-                    <Button type="button" size="sm" onClick={() => signIn("google")} className="bg-white text-slate-900 hover:bg-slate-200">
+                  <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center rounded-2xl border border-white/5 shadow-2xl">
+                    <div className="w-12 h-12 rounded-full bg-violet-500/20 flex items-center justify-center mb-3 border border-violet-500/30 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
+                      <Lock className="h-6 w-6 text-violet-400" />
+                    </div>
+                    <p className="text-sm text-white font-medium mb-4">Login to unlock advanced features</p>
+                    <Button type="button" size="sm" onClick={() => signIn("google")} className="bg-white text-slate-900 hover:bg-slate-200 shadow-lg font-semibold">
                       Sign in with Google
                     </Button>
                   </div>
                 )}
-                <div className="flex items-start gap-3">
-                  <Switch
-                    id="use-custom-code"
-                    checked={useCustomCode}
-                    onCheckedChange={setUseCustomCode}
-                    className="mt-0.5 data-[state=checked]:bg-violet-600"
-                  />
-                  <div className="flex-1 space-y-2">
-                    <Label
-                      htmlFor="use-custom-code"
-                      className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
-                    >
-                      Custom Alias
-                    </Label>
-                    {useCustomCode && (
-                      <div className="relative animate-in fade-in duration-200">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm select-none">
+
+                {/* Custom Alias */}
+                <div className={`p-4 rounded-xl border transition-all duration-300 ${useCustomCode ? "bg-violet-500/10 border-violet-500/30 shadow-[0_0_15px_rgba(139,92,246,0.1)]" : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"}`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-colors ${useCustomCode ? "bg-violet-500/20 text-violet-300 shadow-[0_0_10px_rgba(139,92,246,0.2)]" : "bg-white/5 text-slate-400"}`}>
+                        <Sparkles className="h-4 w-4" />
+                      </div>
+                      <div className="flex flex-col text-left">
+                        <Label htmlFor="use-custom-code" className="text-sm font-semibold text-slate-200 cursor-pointer">Custom Alias</Label>
+                        <span className="text-xs text-slate-400">Personalize your shortened link</span>
+                      </div>
+                    </div>
+                    <Switch id="use-custom-code" checked={useCustomCode} onCheckedChange={setUseCustomCode} className="data-[state=checked]:bg-violet-600" />
+                  </div>
+                  {useCustomCode && (
+                    <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-medium select-none">
                           /
                         </span>
                         <Input
@@ -236,43 +233,39 @@ export default function UrlShortenerForm() {
                           placeholder="my-custom-link"
                           value={customCode}
                           onChange={(e) => setCustomCode(e.target.value)}
-                          className="pl-6 h-10 bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-violet-500/50 text-sm"
+                          className="pl-7 h-10 bg-black/40 border-white/10 text-slate-200 placeholder:text-slate-500 focus-visible:ring-violet-500/50 transition-colors"
                           disabled={isLoading}
                           maxLength={32}
                         />
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
 
-                <Separator className="bg-white/5" />
-
-                <div className="flex items-start gap-3">
-                  <Switch
-                    id="use-password"
-                    checked={usePassword}
-                    onCheckedChange={setUsePassword}
-                    className="mt-0.5 data-[state=checked]:bg-violet-600"
-                  />
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Label
-                        htmlFor="use-password"
-                        className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
-                      >
-                        Password Protection
-                      </Label>
-                      <Lock className="h-3.5 w-3.5 text-slate-500" />
+                {/* Password Protection */}
+                <div className={`p-4 rounded-xl border transition-all duration-300 ${usePassword ? "bg-violet-500/10 border-violet-500/30 shadow-[0_0_15px_rgba(139,92,246,0.1)]" : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"}`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-colors ${usePassword ? "bg-violet-500/20 text-violet-300 shadow-[0_0_10px_rgba(139,92,246,0.2)]" : "bg-white/5 text-slate-400"}`}>
+                        <Lock className="h-4 w-4" />
+                      </div>
+                      <div className="flex flex-col text-left">
+                        <Label htmlFor="use-password" className="text-sm font-semibold text-slate-200 cursor-pointer">Password Protection</Label>
+                        <span className="text-xs text-slate-400">Require a password to access</span>
+                      </div>
                     </div>
-                    {usePassword && (
-                      <div className="relative animate-in fade-in duration-200">
+                    <Switch id="use-password" checked={usePassword} onCheckedChange={setUsePassword} className="data-[state=checked]:bg-violet-600" />
+                  </div>
+                  {usePassword && (
+                    <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
+                      <div className="relative">
                         <Input
                           id="password"
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter a password..."
+                          placeholder="Enter a secure password..."
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="pr-10 h-10 bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-violet-500/50 text-sm"
+                          className="pr-10 h-10 bg-black/40 border-white/10 text-slate-200 placeholder:text-slate-500 focus-visible:ring-violet-500/50 transition-colors"
                           disabled={isLoading}
                         />
                         <button
@@ -280,53 +273,40 @@ export default function UrlShortenerForm() {
                           onClick={() => setShowPassword((v) => !v)}
                           className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                         >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
 
-                <Separator className="bg-white/8" />
-
-                <div className="flex items-start gap-3">
-                  <Switch
-                    id="use-expiry"
-                    checked={useExpiry}
-                    onCheckedChange={setUseExpiry}
-                    className="mt-0.5 data-[state=checked]:bg-violet-600"
-                  />
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Label
-                        htmlFor="use-expiry"
-                        className="text-[hsl(var(--foreground))] text-[15px] font-semibold cursor-pointer"
-                      >
-                        Expiration Date
-                      </Label>
-                      <Calendar className="h-3.5 w-3.5 text-slate-500" />
+                {/* Expiration Date */}
+                <div className={`p-4 rounded-xl border transition-all duration-300 ${useExpiry ? "bg-violet-500/10 border-violet-500/30 shadow-[0_0_15px_rgba(139,92,246,0.1)]" : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04]"}`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-colors ${useExpiry ? "bg-violet-500/20 text-violet-300 shadow-[0_0_10px_rgba(139,92,246,0.2)]" : "bg-white/5 text-slate-400"}`}>
+                        <Calendar className="h-4 w-4" />
+                      </div>
+                      <div className="flex flex-col text-left">
+                        <Label htmlFor="use-expiry" className="text-sm font-semibold text-slate-200 cursor-pointer">Expiration Date</Label>
+                        <span className="text-xs text-slate-400">Set a time limit for your link</span>
+                      </div>
                     </div>
-                    {useExpiry && (
+                    <Switch id="use-expiry" checked={useExpiry} onCheckedChange={setUseExpiry} className="data-[state=checked]:bg-violet-600" />
+                  </div>
+                  {useExpiry && (
+                    <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
                       <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
                             id="expiry-date-picker"
-                            className="h-10 w-full justify-start bg-background border-input text-left text-sm hover:bg-accent hover:text-accent-foreground animate-in fade-in duration-200"
+                            className="h-10 w-full justify-start bg-black/40 border-white/10 text-left font-normal text-slate-200 hover:bg-white/5 hover:text-white transition-colors"
                           >
-                            <Calendar className="mr-2 h-4 w-4 text-slate-400" />
-                            {expiresAt ? (
-                              <span className="text-[hsl(var(--foreground))]">{format(expiresAt, "PPP")}</span>
-                            ) : (
-                              <span className="text-slate-500">Pick a date...</span>
-                            )}
+                            {expiresAt ? format(expiresAt, "PPP") : <span className="text-slate-500">Select a date...</span>}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-background border-border" align="start">
+                        <PopoverContent className="w-auto p-0 bg-slate-950 border border-white/10 shadow-2xl z-[100]" align="center">
                           <CalendarPicker
                             mode="single"
                             selected={expiresAt}
@@ -340,8 +320,8 @@ export default function UrlShortenerForm() {
                           />
                         </PopoverContent>
                       </Popover>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
