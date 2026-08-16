@@ -19,7 +19,7 @@ import {
 import { Button } from "@frontend/components/ui/button";
 import { Input } from "@frontend/components/ui/input";
 import { Label } from "@frontend/components/ui/label";
-import { Switch } from "@frontend/components/ui/switch";
+import { Checkbox } from "@frontend/components/ui/checkbox";
 import { Badge } from "@frontend/components/ui/badge";
 import {
   Card,
@@ -220,7 +220,7 @@ export default function UrlShortenerForm() {
                         <span className="text-xs text-slate-400">Personalize your shortened link</span>
                       </div>
                     </div>
-                    <Switch id="use-custom-code" checked={useCustomCode} onCheckedChange={setUseCustomCode} className="data-[state=checked]:bg-violet-600" />
+                    <Checkbox id="use-custom-code" checked={useCustomCode} onCheckedChange={(c) => setUseCustomCode(c === true)} className="h-5 w-5 data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600" />
                   </div>
                   {useCustomCode && (
                     <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
@@ -254,7 +254,7 @@ export default function UrlShortenerForm() {
                         <span className="text-xs text-slate-400">Require a password to access</span>
                       </div>
                     </div>
-                    <Switch id="use-password" checked={usePassword} onCheckedChange={setUsePassword} className="data-[state=checked]:bg-violet-600" />
+                    <Checkbox id="use-password" checked={usePassword} onCheckedChange={(c) => setUsePassword(c === true)} className="h-5 w-5 data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600" />
                   </div>
                   {usePassword && (
                     <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
@@ -292,7 +292,7 @@ export default function UrlShortenerForm() {
                         <span className="text-xs text-slate-400">Set a time limit for your link</span>
                       </div>
                     </div>
-                    <Switch id="use-expiry" checked={useExpiry} onCheckedChange={setUseExpiry} className="data-[state=checked]:bg-violet-600" />
+                    <Checkbox id="use-expiry" checked={useExpiry} onCheckedChange={(c) => setUseExpiry(c === true)} className="h-5 w-5 data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600" />
                   </div>
                   {useExpiry && (
                     <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 fade-in duration-200">
