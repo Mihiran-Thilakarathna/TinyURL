@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "TinyURL — Free URL Shortener",
   description:
     "Shorten long URLs instantly with TinyURL. Add custom aliases, password protection, expiry dates, and QR codes — all for free.",
-  keywords: ["url shortener", "link shortener", "custom alias", "qr code", "tinylink"],
+  keywords: ["url shortener", "link shortener", "custom alias", "qr code", "tinyurl"],
   openGraph: {
     title: "TinyURL — Free URL Shortener",
     description: "Shorten links with custom aliases, passwords, expiry dates, and QR codes.",

@@ -26,7 +26,7 @@ export default function QrCodeCard({ url, shortCode }: QrCodeCardProps) {
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `tinylink-qr-${shortCode}.png`;
+      link.download = `tinyurl-qr-${shortCode}.png`;
       link.click();
 
       toast.success("QR code downloaded!");

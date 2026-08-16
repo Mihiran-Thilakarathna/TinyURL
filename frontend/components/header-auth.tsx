@@ -22,7 +22,7 @@ export default function HeaderAuth() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2">
-          <Avatar className="h-9 w-9 cursor-pointer border-2 border-transparent hover:border-violet-500/60 transition-colors duration-150">
+          <Avatar className="h-9 w-9 cursor-pointer border-2 border-violet-500/50 shadow-[0_0_10px_rgba(139,92,246,0.3)] hover:border-violet-500 hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300">
             <AvatarImage
               src={session.user.image ?? ""}
               alt={session.user.name ?? "User"}
@@ -61,7 +61,7 @@ export default function HeaderAuth() {
           <div className="p-1">
             <DropdownMenuItem
               onClick={() => signOut()}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground focus:text-red-500 focus:bg-red-500/10 hover:text-red-500 hover:bg-red-500/10 cursor-pointer transition-colors"
             >
               <LogOut className="h-4 w-4" />
               Sign out

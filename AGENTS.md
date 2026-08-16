@@ -10,9 +10,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ---
 
-# TinyLink Project Guidelines
+# TinyURL Project Guidelines
 
-Welcome to the TinyLink repository. As an AI Agent working on this codebase, you must adhere to the following rules and best practices:
+Welcome to the TinyURL repository. As an AI Agent working on this codebase, you must adhere to the following rules and best practices:
 
 ## Tech Stack
 - **Framework:** Next.js (App Router)
@@ -47,4 +47,4 @@ Welcome to the TinyLink repository. As an AI Agent working on this codebase, you
 - Do not commit `.env` or `.env.local` files.
 - Commit messages should be descriptive and concise.
 
-*These rules ensure that the TinyLink project remains clean, secure, and easily maintainable.*
+*These rules ensure that the TinyURL project remains clean, secure, and easily maintainable.*
