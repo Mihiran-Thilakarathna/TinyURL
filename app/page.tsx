@@ -4,6 +4,8 @@ import {
   Link2, Zap, Lock, QrCode, BarChart2, Clock,
   ArrowRight, Sparkles, Shield, Globe2, Layers,
 } from "lucide-react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const features = [
   {
@@ -56,7 +58,9 @@ const features = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
   return (
     <main className="relative overflow-x-hidden">
 
@@ -79,16 +83,18 @@ export default function HomePage() {
         className="relative flex flex-col items-center justify-center text-center px-4 pt-12 pb-12"
         style={{ minHeight: "calc(100dvh - 4rem)" }}
       >
-        <div className="fade-up-1 hero-badge animate-pulse inline-flex items-center gap-2 rounded-full border px-4 py-1.5 mb-5 text-xs font-semibold tracking-wide"
-          style={{
-            borderColor: "hsl(263 70% 58% / 0.35)",
-            background: "hsl(263 70% 58% / 0.08)",
-            color: "hsl(263 70% 70%)",
-          }}>
-          <Sparkles className="h-3 w-3" />
-          Free · No signup required for basic links
-          <ArrowRight className="h-3 w-3" />
-        </div>
+        {!session && (
+          <div className="fade-up-1 hero-badge animate-pulse inline-flex items-center gap-2 rounded-full border px-4 py-1.5 mb-5 text-xs font-semibold tracking-wide"
+            style={{
+              borderColor: "hsl(263 70% 58% / 0.35)",
+              background: "hsl(263 70% 58% / 0.08)",
+              color: "hsl(263 70% 70%)",
+            }}>
+            <Sparkles className="h-3 w-3" />
+            Free · No signup required for basic links
+            <ArrowRight className="h-3 w-3" />
+          </div>
+        )}
 
         <h1 className="fade-up-2 max-w-3xl text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.08] mb-4">
           <span className="hero-gradient-text">The smartest way</span>
